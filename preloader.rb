@@ -1,0 +1,13 @@
+require 'bundler/setup'
+require 'pry'
+require 'codebreaker'
+require 'date'
+require 'yaml'
+require 'i18n'
+require 'linguistics'
+
+require_relative 'config'
+require './classes/base_console'
+require './classes/options_console'
+require './classes/registration_console'
+require './classes/game_console'

@@ -1,0 +1,70 @@
+en:
+  messages:
+    welcome: 'Welcome to codebreaker Game!'
+    options: |
+      Please choose one from listed commands:
+      1.start
+      2.rules
+      3.stats
+      4.exit
+    wrong_command: 'You have passed unexpected command. Please choose one from listed commands'
+  
+  display:
+    rules: |
+      - Codebreaker is a logic game in which a code-breaker tries to break a secret code created by a code-maker. The codemaker, which will be played by the application we’re going to write, creates a secret code of four numbers between 1 and 6.
+      - The codebreaker gets some number of chances to break the code (depends on chosen difficulty). In each turn, the codebreaker makes a guess of 4 numbers. The codemaker then marks the guess with up to 4 signs - + or - or empty spaces.
+      - A + indicates an exact match: one of the numbers in the guess is the same as one of the numbers in the secret code and in the same position. For example:
+        Secret number - 1234
+        Input number - 6264
+        Number of pluses - 2 (second and fourth position)
+      -  A - indicates a number match: one of the numbers in the guess is the same as one of the numbers in the secret code but in a different position. For example:
+        Secret number - 1234
+        Input number - 6462
+        Number of minuses - 2 (second and fourth position)
+      - An empty space indicates that there is not a current digit in a secret number.
+      - If codebreaker inputs the exact number as a secret number - codebreaker wins the game. If all attempts are spent - codebreaker loses.
+      - Codebreaker also has some number of hints(depends on chosen difficulty). If a user takes a hint - he receives back a separate digit of the secret code.
+    stats: |
+      Rating: %{rating}
+      Name: %{name}
+      Difficulty: %{difficulty}
+      Attempts Total: %{attempts_total}
+      Attempts Used: %{attempts_used}
+      Hints Total: %{hints_total}
+      Hints Used: %{hints_used}
+  
+  commands:
+    start: 'start'
+    exit: 'exit'
+    rules: 'rules'
+    stats: 'stats'
+
+  game:
+    registration:
+      name: 'Please enter your name'
+      wrong_name: "Not valid name, it should have length from 3 to 20 symbols."
+      difficulty: |
+        Please, choose one from these difficulties:
+        1. easy - 15 attempts, 2 hints
+        2. medium - 10 attempts, 1 hint
+        3. hell - 5 attempts, 1 hint
+      wrong_difficulty: "Not valid difficultty. Please, try again."
+
+    process:
+      player_input: 'Please, input your number or take a hint'
+      wrong_input: 'Wrong input fomat, please try again'
+      no_hints: 'You have used all hints'
+      hint: 'Number from secret code - %{number}'
+      win_message: 'Congratulations! You win!'
+      lose_message: 'You lose, try again'
+      result: |
+        Your gess result: %{result}
+        Hints left: %{hints_left}
+        Attempts left: %{attempts_left}
+
+      
+    
+
+  
+
+  
