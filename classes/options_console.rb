@@ -23,10 +23,10 @@ class OptionsConsole < BaseConsole
 
   def process_option(option)
     case option
-    when 'exit' then exit_game
-    when 'rules' then show_rules
-    when 'stats' then show_stats
-    when 'start' then start_registration
+    when I18n.t('commands.exit') then exit_game
+    when I18n.t('commands.rules') then show_rules
+    when I18n.t('commands.stats') then show_stats
+    when I18n.t('commands.start') then start_registration
     else show_error
     end
   end
@@ -45,7 +45,7 @@ class OptionsConsole < BaseConsole
   end
 
   def show_stats
-    Codebreaker::Stats.new.sorted_players.each_with_index do |player, index|
+    Stats.new.sorted_players.each_with_index do |player, index|
       puts I18n.t('display.stats',
                   rating: index + 1,
                   name: player.name,
