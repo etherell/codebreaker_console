@@ -1,8 +1,9 @@
 class RegistrationConsole < BaseConsole
-  attr_accessor :player
+  attr_accessor :player, :game_statistic
 
   def initialize
     @player = Codebreaker::Player.new
+    @game_statistic = Codebreaker::GameStatistic.new
     super
   end
 
@@ -10,7 +11,7 @@ class RegistrationConsole < BaseConsole
     request_player_name
     set_player_name
     request_difficulty
-    set_difficulty
+    set_game_difficulty
     start_game
   end
 
@@ -19,7 +20,7 @@ class RegistrationConsole < BaseConsole
   def request_player_name
     puts I18n.t('game.registration.name')
     @name = gets.chomp
-    request_name_again unless Codebreaker::Validator.valid_name?(@name)
+    request_name_again unless Validator.valid_name?(@name)
   end
 
   def request_name_again
@@ -34,7 +35,7 @@ class RegistrationConsole < BaseConsole
   def request_difficulty
     puts I18n.t('game.registration.difficulty')
     @difficulty = gets.chomp
-    request_difficulty_again unless Codebreaker::Validator.valid_difficulty?(@difficulty)
+    request_difficulty_again unless Validator.valid_difficulty?(@difficulty)
   end
 
   def request_difficulty_again
@@ -42,11 +43,11 @@ class RegistrationConsole < BaseConsole
     request_difficulty
   end
 
-  def set_difficulty
-    player.difficulty = @difficulty
+  def set_game_difficulty
+    game_statistic.difficulty = @difficulty
   end
 
   def start_game
-    GameConsole.call(player)
+    GameConsole.call(player, game_statistic)
   end
 end

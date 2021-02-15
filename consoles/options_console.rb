@@ -1,4 +1,11 @@
 class OptionsConsole < BaseConsole
+  attr_reader :game_statistic
+
+  def initialize
+    @game_statistic = StatsManager.new
+    super
+  end
+
   def call
     show_start_message
     show_options
@@ -15,7 +22,7 @@ class OptionsConsole < BaseConsole
     puts I18n.t('messages.options')
   end
 
-  def get_option
+  def get_option # rubocop:disable Naming/AccessorMethodName
     option = gets.chomp
     process_option(option)
     get_option_again
@@ -31,7 +38,7 @@ class OptionsConsole < BaseConsole
     end
   end
 
-  def get_option_again
+  def get_option_again # rubocop:disable Naming/AccessorMethodName
     show_options
     get_option
   end
@@ -45,15 +52,15 @@ class OptionsConsole < BaseConsole
   end
 
   def show_stats
-    Stats.new.sorted_players.each_with_index do |player, index|
+    game_statistic.game_statistics.each_with_index do |statistic, index|
       puts I18n.t('display.stats',
                   rating: index + 1,
-                  name: player.name,
-                  difficulty: player.difficulty,
-                  attempts_total: player.attempts_total,
-                  attempts_used: player.attempts_used,
-                  hints_total: player.hints_total,
-                  hints_used: player.hints_used) + "\n"
+                  player_name: statistic['player_name'],
+                  difficulty: statistic['difficulty'],
+                  attempts_total: statistic['attempts_total'],
+                  attempts_used: statistic['attempts_used'],
+                  hints_total: statistic['hints_total'],
+                  hints_used: statistic['hints_used']).concat("\n")
     end
   end
 
