@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 class GameConsole < BaseConsole
   attr_reader :player_input, :player, :game, :game_statistic
-
-  HINT_INPUT = 'hint'.freeze
 
   def initialize(player, game_statistic)
     @player = player
@@ -14,12 +14,12 @@ class GameConsole < BaseConsole
   def call
     prepare_hints
     game_statistic.attempts_total.times do
-      request_player_input
+      request_player_number
       update_game_params
       show_result
-      finish_game if game.win?
+      break if game.win?
     end
-    show_lose_message
+    finish_game
   end
 
   private
@@ -28,26 +28,22 @@ class GameConsole < BaseConsole
     game_statistic.secret_number = game.secret_number
   end
 
-  def request_player_input
-    puts I18n.t('game.process.player_input')
-    @player_input = gets.chomp
-    show_hint if @player_input == HINT_INPUT
-    request_player_input_again unless Validator.valid_input?(player_input)
+  def request_player_number
+    puts I18n.t('game.process.player_number')
+    @player_input = receive_input
+    show_hint if player_input == I18n.t('answers.hint')
+    request_player_number_again unless Validator.valid_input?(player_input)
   end
 
-  def request_player_input_again
+  def request_player_number_again
     puts I18n.t('game.process.wrong_input')
-    request_player_input
+    request_player_number
   end
 
   def show_hint
-    if @game_statistic.hints?
-      puts I18n.t('game.process.hint', number: @game_statistic.give_hint)
-    else
-      puts I18n.t('game.process.no_hints')
-    end
+    return puts I18n.t('game.process.no_hints') unless game_statistic.hints?
 
-    request_player_input
+    puts I18n.t('game.process.hint', number: game_statistic.give_hint)
   end
 
   def update_game_params
@@ -63,20 +59,6 @@ class GameConsole < BaseConsole
   end
 
   def finish_game
-    StatsManager.new.add(result_hash)
-    puts I18n.t('game.process.win_message')
-    exit_game
-  end
-
-  def show_lose_message
-    I18n.t('game.process.lose_message')
-  end
-
-  def result_hash
-    game_statistic.to_h.merge(player.to_h)
-  end
-
-  def exit_game
-    exit(true)
+    ResultConsole.call(player, game_statistic)
   end
 end

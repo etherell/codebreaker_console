@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'pry'
 require 'codebreaker'
@@ -13,3 +15,4 @@ require './consoles/base_console'
 require './consoles/options_console'
 require './consoles/registration_console'
 require './consoles/game_console'
+require './consoles/result_console'

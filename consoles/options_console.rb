@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OptionsConsole < BaseConsole
   attr_reader :game_statistic
 
@@ -9,7 +11,7 @@ class OptionsConsole < BaseConsole
   def call
     show_start_message
     show_options
-    get_option
+    receive_option
   end
 
   private
@@ -22,10 +24,10 @@ class OptionsConsole < BaseConsole
     puts I18n.t('messages.options')
   end
 
-  def get_option # rubocop:disable Naming/AccessorMethodName
-    option = gets.chomp
+  def receive_option
+    option = receive_input
     process_option(option)
-    get_option_again
+    receive_option_again
   end
 
   def process_option(option)
@@ -38,9 +40,9 @@ class OptionsConsole < BaseConsole
     end
   end
 
-  def get_option_again # rubocop:disable Naming/AccessorMethodName
+  def receive_option_again
     show_options
-    get_option
+    receive_option
   end
 
   def exit_game

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe RegistrationConsole do
@@ -9,8 +11,8 @@ RSpec.describe RegistrationConsole do
     before { allow(GameConsole).to receive(:call) }
 
     context 'with valid params' do
-      let(:player_name) { 'Valera' }
-      let(:difficulty) { 'easy' }
+      let(:player_name) { 'a' * Validator::MIN_NAME_LENGTH }
+      let(:difficulty) { I18n.t('difficulties.easy') }
 
       before { allow(registration_console).to receive(:gets).and_return(player_name, difficulty) }
 
@@ -20,7 +22,7 @@ RSpec.describe RegistrationConsole do
       end
 
       it 'requests player name' do
-        expect { registration_console_call }.to output(/Please enter your name/).to_stdout
+        expect { registration_console_call }.to output(/#{I18n.t('game.registration.player_name')}/).to_stdout
       end
 
       it 'receives set_player_name' do
@@ -34,7 +36,7 @@ RSpec.describe RegistrationConsole do
       end
 
       it 'requests difficulty' do
-        expect { registration_console_call }.to output(/Please, choose one from these difficulties/).to_stdout
+        expect { registration_console_call }.to output(/#{I18n.t('game.registration.difficulty')}/).to_stdout
       end
 
       it 'receives set_game_difficulty' do
@@ -59,17 +61,17 @@ RSpec.describe RegistrationConsole do
     end
 
     context 'with invalid name' do
-      let(:player_name) { 'no' }
-      let(:difficulty) { 'easy' }
+      let(:player_name) { 'a' * (Validator::MIN_NAME_LENGTH - 1) }
+      let(:difficulty) { I18n.t('difficulties.easy') }
 
       before { allow(registration_console).to receive(:gets).and_return(player_name, difficulty) }
 
       it 'shows wrong name error' do
-        expect { registration_console_call }.to output(/Not valid name/).to_stdout
+        expect { registration_console_call }.to output(/#{I18n.t('game.registration.wrong_player_name')}/).to_stdout
       end
 
       it 'requests player name again' do
-        expect(registration_console).to receive(:request_name_again)
+        expect(registration_console).to receive(:request_player_name_again)
         registration_console_call
       end
     end

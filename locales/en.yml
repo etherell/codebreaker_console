@@ -8,7 +8,18 @@ en:
       3.stats
       4.exit
     wrong_command: 'You have passed unexpected command. Please choose one from listed commands'
+
+  options:
+    start: start
+    rules: rules
+    stats: stats
+    exit: exit
   
+  answers:
+    positive: 'yes'
+    negative: 'no'
+    hint: 'hint'
+
   display:
     rules: |
       Game rules:
@@ -39,11 +50,16 @@ en:
     exit: 'exit'
     rules: 'rules'
     stats: 'stats'
+  
+  difficulties:
+    easy: 'easy'
+    medium: 'medium'
+    hell: 'hell'
 
   game:
     registration:
-      name: 'Please enter your name'
-      wrong_name: "Not valid name, it should have length from 3 to 20 symbols."
+      player_name: 'Please enter your name'
+      wrong_player_name: "Not valid name, it should have length from 3 to 20 symbols."
       difficulty: |
         Please, choose one from these difficulties:
         1. easy - 15 attempts, 2 hints
@@ -52,16 +68,24 @@ en:
       wrong_difficulty: "Not valid difficultty. Please, try again."
 
     process:
-      player_input: 'Please, input your number or take a hint'
+      player_number: 'Please, input your number or take a hint'
       wrong_input: 'Wrong input fomat, please try again'
       no_hints: 'You have used all hints'
       hint: 'Number from secret code - %{number}'
-      win_message: 'Congratulations! You win!'
-      lose_message: 'You lose, try again'
       result: |
         Your gess result: %{result}
         Hints left: %{hints_left}
         Attempts left: %{attempts_left}
+    
+    result:
+      ask_if_save_result: 'Would you like to save result? (yes/no)'
+      ask_if_start_new_game: 'Would you like start new game? (yes/no)'
+      win_message: 'Congratulations! You win!'
+      lose_message: 'You lose, try again'
+      secret_number: 'Secret number was %{secret_number}'
+
+    
+    
 
       
     

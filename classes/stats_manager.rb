@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class StatsManager
-  DIR_NAME = 'data'.freeze
-  DATA_PATH = './data/game_statistics.yaml'.freeze
+  DIR_NAME = 'data'
+  DATA_PATH = './data/game_statistics.yaml'
   DIFFICULTIES = %w[hell medium easy].freeze
 
   attr_reader :game_statistics
@@ -9,8 +11,8 @@ class StatsManager
     @game_statistics = sorted_statistics
   end
 
-  def add(retsult_hash)
-    @game_statistics << retsult_hash
+  def add(result_hash)
+    @game_statistics << result_hash
     save
   end
 
@@ -27,7 +29,8 @@ class StatsManager
     return [] unless File.exist?(DATA_PATH)
 
     stats_manager = YAML.safe_load(File.read(DATA_PATH),
-                                   permitted_classes: [StatsManager, Codebreaker::GameStatistic], aliases: true)
+                                   permitted_classes: [StatsManager, Hash, Symbol],
+                                   aliases: true)
     stats_manager&.game_statistics || []
   end
 

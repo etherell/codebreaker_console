@@ -1,16 +1,19 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe GameConsole do
   subject(:game_console_call) { game_console.call }
 
   let(:game_console) { described_class.new(player, game_statistic) }
-  let(:player) { Codebreaker::Player.new }
-  let(:game_statistic) { Codebreaker::GameStatistic.new }
+  let(:player) { Codebreaker::Player.new('a' * Validator::MIN_NAME_LENGTH) }
+  let(:game_statistic) { Codebreaker::GameStatistic.new(I18n.t('difficulties.hell')) }
+  let(:input) { '1' * Validator::NUMBER_LENGTH }
 
   before do
-    player.name = 'Valera'
-    game_statistic.difficulty = 'hell'
     stub_const('StatsManager::DATA_PATH', './data/test_game_statistics.yaml')
+    game_statistic.instance_variable_set(:@attempts_total, 1)
+    allow(game_console).to receive(:finish_game)
   end
 
   after do
@@ -20,9 +23,9 @@ RSpec.describe GameConsole do
 
   describe '#call' do
     describe '#when game started' do
-      let(:input) { '1234' }
-
-      before { allow(game_console).to receive(:gets).and_return(input) }
+      before do
+        allow(game_console).to receive(:gets).and_return(input)
+      end
 
       it 'sets statistic secret number' do
         game_console_call
@@ -34,8 +37,8 @@ RSpec.describe GameConsole do
         expect(game_console.game_statistic).to be_hints
       end
 
-      it 'receives request_player_input' do
-        expect(game_console).to receive(:request_player_input).at_least(1).time
+      it 'receives request_player_number' do
+        expect(game_console).to receive(:request_player_number)
         game_console_call
       end
 
@@ -45,12 +48,10 @@ RSpec.describe GameConsole do
     end
 
     context 'when player inputs valid number' do
-      let(:input) { '1234' }
-
       before { allow(game_console).to receive(:gets).and_return(input) }
 
       it 'updates game params' do
-        expect(game_console).to receive(:update_game_params).at_least(1).time
+        expect(game_console).to receive(:update_game_params)
         game_console_call
       end
 
@@ -60,15 +61,14 @@ RSpec.describe GameConsole do
     end
 
     context 'when player requests hints' do
-      let(:hint_input) { 'hint' }
-      let(:number_input) { '1234' }
+      let(:hint_input) { I18n.t('answers.hint') }
 
       before do
-        allow(game_console).to receive(:gets).and_return(hint_input, hint_input, number_input)
+        allow(game_console).to receive(:gets).and_return(hint_input, hint_input, input)
       end
 
       it 'receives show_hint' do
-        expect(game_console).to receive(:show_hint).at_least(1).time
+        expect(game_console).to receive(:show_hint).twice
         game_console_call
       end
 
@@ -82,15 +82,14 @@ RSpec.describe GameConsole do
     end
 
     context 'when player inputs wrong number' do
-      let(:not_valid_input) { '123456' }
-      let(:valid_input) { '1234' }
+      let(:not_valid_input) { '1' * (Validator::NUMBER_LENGTH + 1) }
 
       before do
-        allow(game_console).to receive(:gets).and_return(not_valid_input, valid_input)
+        allow(game_console).to receive(:gets).and_return(not_valid_input, input)
       end
 
-      it 'receives request_player_input_again' do
-        expect(game_console).to receive(:request_player_input_again).at_least(1).time
+      it 'receives request_player_number_again' do
+        expect(game_console).to receive(:request_player_number_again)
         game_console_call
       end
 
@@ -99,26 +98,17 @@ RSpec.describe GameConsole do
       end
     end
 
-    context 'when player wins game' do
-      let(:number) { '1234' }
+    context 'when game finishes' do
+      let(:result_console) { ResultConsole }
 
       before do
-        game_console.game.instance_variable_set(:@secret_number, number)
+        game_console.game.instance_variable_set(:@secret_number, input)
         allow(game_console).to receive(:exit)
-        allow(game_console).to receive(:gets).and_return(number)
+        allow(game_console).to receive(:gets).and_return(input)
       end
 
-      it 'receives request_player_input_again' do
-        expect(game_console).to receive(:finish_game).at_least(1).time
-        game_console_call
-      end
-
-      it 'shows win message' do
-        expect { game_console_call }.to output(/Congratulations! You win!/).to_stdout
-      end
-
-      it 'exits game' do
-        expect(game_console).to receive(:exit_game).at_least(1).time
+      it 'receives request_player_number_again' do
+        expect(game_console).to receive(:finish_game).once
         game_console_call
       end
     end

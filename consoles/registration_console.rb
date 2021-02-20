@@ -1,11 +1,7 @@
+# frozen_string_literal: true
+
 class RegistrationConsole < BaseConsole
   attr_accessor :player, :game_statistic
-
-  def initialize
-    @player = Codebreaker::Player.new
-    @game_statistic = Codebreaker::GameStatistic.new
-    super
-  end
 
   def call
     request_player_name
@@ -18,23 +14,23 @@ class RegistrationConsole < BaseConsole
   private
 
   def request_player_name
-    puts I18n.t('game.registration.name')
-    @name = gets.chomp
-    request_name_again unless Validator.valid_name?(@name)
+    puts I18n.t('game.registration.player_name')
+    @player_name = receive_input
+    request_player_name_again unless Validator.valid_player_name?(@player_name)
   end
 
-  def request_name_again
-    puts I18n.t('game.registration.wrong_name')
+  def request_player_name_again
+    puts I18n.t('game.registration.wrong_player_name')
     request_player_name
   end
 
   def set_player_name
-    player.name = @name
+    @player = Codebreaker::Player.new(@player_name)
   end
 
   def request_difficulty
     puts I18n.t('game.registration.difficulty')
-    @difficulty = gets.chomp
+    @difficulty = receive_input
     request_difficulty_again unless Validator.valid_difficulty?(@difficulty)
   end
 
@@ -44,7 +40,7 @@ class RegistrationConsole < BaseConsole
   end
 
   def set_game_difficulty
-    game_statistic.difficulty = @difficulty
+    @game_statistic = Codebreaker::GameStatistic.new(@difficulty)
   end
 
   def start_game

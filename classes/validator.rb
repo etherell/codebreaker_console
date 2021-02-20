@@ -1,22 +1,22 @@
+# frozen_string_literal: true
+
 class Validator
   DIFFICULTIES = %w[hell medium easy].freeze
-  EXIT_INPUT = 'exit'.freeze
-  HINT_INPUT = 'hint'.freeze
+  MIN_NAME_LENGTH = 3
+  MAX_NAME_LENGTH = 20
+  NUMBER_LENGTH = 4
 
   class << self
-    def valid_name?(name)
-      exit_game if name == EXIT_INPUT
-      name.length.between?(3, 20)
+    def valid_player_name?(name)
+      name.length.between?(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
     end
 
     def valid_difficulty?(difficulty)
-      exit_game if difficulty == EXIT_INPUT
       DIFFICULTIES.include?(difficulty)
     end
 
     def valid_input?(input)
-      exit_game if input == EXIT_INPUT
-      input.match?(/^[1-6]{4}$/) || input == HINT_INPUT
+      input.match?(/^[1-6]{#{NUMBER_LENGTH}}$/o)
     end
 
     private

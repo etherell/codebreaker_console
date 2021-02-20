@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseConsole
   def initialize(*args); end
 
@@ -7,5 +9,13 @@ class BaseConsole
 
   def call
     raise NotImplementedError
+  end
+
+  EXIT_INPUT = 'exit'
+
+  def receive_input
+    input = gets.chomp
+    exit(true) if input == EXIT_INPUT
+    input
   end
 end
