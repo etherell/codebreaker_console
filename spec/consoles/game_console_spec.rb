@@ -88,11 +88,6 @@ RSpec.describe GameConsole do
         allow(game_console).to receive(:gets).and_return(not_valid_input, input)
       end
 
-      it 'receives request_player_number_again' do
-        expect(game_console).to receive(:request_player_number_again)
-        game_console_call
-      end
-
       it 'shows error message' do
         expect { game_console_call }.to output(/Wrong input fomat, please try again/).to_stdout
       end
@@ -107,7 +102,7 @@ RSpec.describe GameConsole do
         allow(game_console).to receive(:gets).and_return(input)
       end
 
-      it 'receives request_player_number_again' do
+      it 'receives finish_game' do
         expect(game_console).to receive(:finish_game).once
         game_console_call
       end

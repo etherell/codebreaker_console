@@ -29,15 +29,14 @@ class GameConsole < BaseConsole
   end
 
   def request_player_number
-    puts I18n.t('game.process.player_number')
-    @player_input = receive_input
-    show_hint if player_input == I18n.t('answers.hint')
-    request_player_number_again unless Validator.valid_input?(player_input)
-  end
+    loop do
+      puts I18n.t('game.process.player_number')
+      @player_input = receive_input
+      next show_hint if player_input == I18n.t('answers.hint')
+      break if Validator.valid_input?(player_input)
 
-  def request_player_number_again
-    puts I18n.t('game.process.wrong_input')
-    request_player_number
+      puts I18n.t('game.process.wrong_input')
+    end
   end
 
   def show_hint

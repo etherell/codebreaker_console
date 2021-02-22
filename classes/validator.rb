@@ -18,11 +18,5 @@ class Validator
     def valid_input?(input)
       input.match?(/^[1-6]{#{NUMBER_LENGTH}}$/o)
     end
-
-    private
-
-    def exit_game
-      exit(true)
-    end
   end
 end

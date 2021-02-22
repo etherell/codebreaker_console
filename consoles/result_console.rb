@@ -32,17 +32,21 @@ class ResultConsole < BaseConsole
   end
 
   def ask_if_save_result
-    puts I18n.t('game.result.ask_if_save_result')
-    @player_input = receive_input
-    ask_if_save_result unless OPTIONS.include?(@player_input)
+    loop do
+      puts I18n.t('game.result.ask_if_save_result')
+      @player_input = receive_input
+      break if OPTIONS.include?(@player_input)
+    end
 
     save_statistics if @player_input == I18n.t('answers.positive')
   end
 
   def ask_if_start_new_game
-    puts I18n.t('game.result.ask_if_start_new_game')
-    @player_input = receive_input
-    ask_if_start_new_game unless OPTIONS.include?(@player_input)
+    loop do
+      puts I18n.t('game.result.ask_if_start_new_game')
+      @player_input = receive_input
+      break if OPTIONS.include?(@player_input)
+    end
 
     @player_input == I18n.t('answers.positive') ? restart_game : exit_game
   end

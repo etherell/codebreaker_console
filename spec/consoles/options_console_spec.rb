@@ -8,14 +8,10 @@ RSpec.describe OptionsConsole do
   let(:options_console) { described_class.new }
 
   describe '#call' do
-    before do
-      allow(options_console).to receive(:receive_option_again)
-    end
+    before { allow(options_console).to receive(:loop).and_yield }
 
     context 'when console called' do
-      before do
-        allow(options_console).to receive(:gets).and_return(I18n.t('options.rules'))
-      end
+      before { allow(options_console).to receive(:gets).and_return(I18n.t('options.rules')) }
 
       it 'shows welcome message' do
         expect { options_console_call }.to output(/#{I18n.t('messages.welcome')}/).to_stdout

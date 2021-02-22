@@ -10,8 +10,10 @@ class OptionsConsole < BaseConsole
 
   def call
     show_start_message
-    show_options
-    receive_option
+    loop do
+      show_options
+      receive_option
+    end
   end
 
   private
@@ -27,7 +29,6 @@ class OptionsConsole < BaseConsole
   def receive_option
     option = receive_input
     process_option(option)
-    receive_option_again
   end
 
   def process_option(option)
@@ -38,11 +39,6 @@ class OptionsConsole < BaseConsole
     when I18n.t('commands.start') then start_registration
     else show_error
     end
-  end
-
-  def receive_option_again
-    show_options
-    receive_option
   end
 
   def exit_game

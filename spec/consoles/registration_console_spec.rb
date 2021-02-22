@@ -69,11 +69,6 @@ RSpec.describe RegistrationConsole do
       it 'shows wrong name error' do
         expect { registration_console_call }.to output(/#{I18n.t('game.registration.wrong_player_name')}/).to_stdout
       end
-
-      it 'requests player name again' do
-        expect(registration_console).to receive(:request_player_name_again)
-        registration_console_call
-      end
     end
   end
 end
