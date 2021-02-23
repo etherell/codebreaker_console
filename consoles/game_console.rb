@@ -5,14 +5,13 @@ class GameConsole < BaseConsole
 
   def initialize(player, game_statistic)
     @player = player
-    @game = Codebreaker::Game.new
+    @game = Codebreaker::Game.new(game_statistic)
     @game_statistic = game_statistic
     @player_input = ''
     super
   end
 
   def call
-    prepare_hints
     game_statistic.attempts_total.times do
       request_player_number
       update_game_params
@@ -23,10 +22,6 @@ class GameConsole < BaseConsole
   end
 
   private
-
-  def prepare_hints
-    game_statistic.secret_number = game.secret_number
-  end
 
   def request_player_number
     loop do
@@ -58,6 +53,6 @@ class GameConsole < BaseConsole
   end
 
   def finish_game
-    ResultConsole.call(player, game_statistic)
+    ResultConsole.call(player, game_statistic, game)
   end
 end

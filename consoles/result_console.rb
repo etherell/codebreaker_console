@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ResultConsole < BaseConsole
-  attr_reader :player, :game_statistic
+  attr_reader :player, :game_statistic, :game
 
   OPTIONS = %w[yes no].freeze
 
-  def initialize(player, game_statistic)
+  def initialize(player, game_statistic, game)
     @player = player
     @game_statistic = game_statistic
+    @game = game
     @player_input = ''
     super
   end
@@ -60,7 +61,7 @@ class ResultConsole < BaseConsole
   end
 
   def show_secret_number
-    puts I18n.t('game.result.secret_number', secret_number: game_statistic.secret_number)
+    puts I18n.t('game.result.secret_number', secret_number: game.secret_number)
   end
 
   def save_statistics

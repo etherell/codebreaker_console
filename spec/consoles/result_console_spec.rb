@@ -5,15 +5,17 @@ require 'spec_helper'
 RSpec.describe ResultConsole do
   subject(:result_console_call) { result_console.call }
 
-  let(:result_console) { described_class.new(player, game_statistic) }
+  let(:result_console) { described_class.new(player, game_statistic, game) }
   let(:player) { Codebreaker::Player.new('a' * Validator::MIN_NAME_LENGTH) }
   let(:game_statistic) { Codebreaker::GameStatistic.new(I18n.t('difficulties.hell')) }
+  let(:game) { Codebreaker::Game.new(game_statistic) }
   let(:secret_number) { '1' * Validator::NUMBER_LENGTH }
 
   before do
     stub_const('StatsManager::DATA_PATH', './data/test_game_statistics.yaml')
     allow(result_console).to receive(:exit)
-    game_statistic.instance_variable_set(:@secret_number, secret_number)
+    game.instance_variable_set(:@secret_number, secret_number)
+    allow(game).to receive(:win?).and_return(true)
   end
 
   describe '#call' do
