@@ -65,7 +65,7 @@ class ResultConsole < BaseConsole
   end
 
   def save_statistics
-    result_hash = game_statistic.to_h.merge(player.to_h)
+    result_hash = game_statistic.to_hash.merge(player.to_hash)
     StatsManager.new.add(result_hash)
   end
 end

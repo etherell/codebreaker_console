@@ -1,6 +1,6 @@
 GIT
   remote: https://etherell:60c11ad6e948f1637ddefc0d1401bac1b0b8e8ac@github.com/etherell/codebreaker.git
-  revision: 862dab896583b4c6fe93573602c11f13c1ffe347
+  revision: 55aef9a30bfb9d75dc36d502f8a7bc91de4a1a93
   branch: develop
   specs:
     codebreaker (0.1.0)
@@ -38,7 +38,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     rainbow (3.0.0)
-    regexp_parser (2.1.0)
+    regexp_parser (2.1.1)
     rexml (3.2.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -53,7 +53,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
-    rubocop (1.10.0)
+    rubocop (1.11.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -64,7 +64,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.4.1)
       parser (>= 2.7.1.5)
-    rubocop-performance (1.9.2)
+    rubocop-performance (1.10.1)
       rubocop (>= 0.90.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rspec (2.2.0)

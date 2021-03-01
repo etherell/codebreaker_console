@@ -8,7 +8,7 @@ RSpec.describe StatsManager do
   end
   let(:player) { Codebreaker::Player.new(player_name) }
   let(:game_statistic) { Codebreaker::GameStatistic.new(Validator::DIFFICULTIES.sample) }
-  let(:result_hash) { game_statistic.to_h.merge(player.to_h) }
+  let(:result_hash) { game_statistic.to_hash.merge(player.to_hash) }
   let(:stats_manager) { described_class.new }
 
   before do
