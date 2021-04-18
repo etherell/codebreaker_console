@@ -1,3 +1,4 @@
 data/
 tmp/
 coverage/
+.env
