@@ -1,4 +1,4 @@
-require: 
+require:
   - rubocop-performance
   - rubocop-rspec
 
@@ -15,6 +15,10 @@ Metrics/BlockLength:
 Metrics/ModuleLength:
   Exclude:
     - 'spec/**/*'
+
+Lint/MissingSuper:
+  Exclude:
+    - 'consoles/**/*'
 
 Style/Documentation:
   Enabled: false

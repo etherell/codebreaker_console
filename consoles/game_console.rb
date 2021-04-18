@@ -8,7 +8,6 @@ class GameConsole < BaseConsole
     @game = Codebreaker::Game.new(game_statistic)
     @game_statistic = game_statistic
     @player_input = ''
-    super
   end
 
   def call

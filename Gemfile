@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'codebreaker', git: 'https://etherell:60c11ad6e948f1637ddefc0d1401bac1b0b8e8ac@github.com/etherell/codebreaker.git', branch: :develop
+gem 'codebreaker', git: 'https://github.com/etherell/codebreaker', branch: :main
 gem 'faker', '~> 2.16'
 gem 'fasterer', '~> 0.8.3'
 gem 'i18n', '~> 1.8', '>= 1.8.5'

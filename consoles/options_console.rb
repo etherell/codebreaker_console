@@ -5,7 +5,6 @@ class OptionsConsole < BaseConsole
 
   def initialize
     @game_statistic = StatsManager.new
-    super
   end
 
   def call

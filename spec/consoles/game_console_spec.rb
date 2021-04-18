@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe GameConsole do
-  subject(:game_console_call) { game_console.call }
+  subject(:game_console_call) { described_class.call(player, game_statistic) }
 
   let(:game_console) { described_class.new(player, game_statistic) }
   let(:player) { Codebreaker::Player.new('a' * Validator::MIN_NAME_LENGTH) }
@@ -14,6 +14,7 @@ RSpec.describe GameConsole do
     stub_const('StatsManager::DATA_PATH', './data/test_game_statistics.yaml')
     game_statistic.instance_variable_set(:@attempts_total, 1)
     allow(game_console).to receive(:finish_game)
+    allow(described_class).to receive(:new).and_return(game_console)
   end
 
   after do

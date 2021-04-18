@@ -10,7 +10,6 @@ class ResultConsole < BaseConsole
     @game_statistic = game_statistic
     @game = game
     @player_input = ''
-    super
   end
 
   def call

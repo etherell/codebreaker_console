@@ -3,7 +3,6 @@
 class StatsManager
   DIR_NAME = 'data'
   DATA_PATH = './data/game_statistics.yaml'
-  DIFFICULTIES = %w[hell medium easy].freeze
 
   attr_reader :game_statistics
 
@@ -19,7 +18,7 @@ class StatsManager
   private
 
   def sorted_statistics
-    DIFFICULTIES.flat_map do |difficulty|
+    Validator::DIFFICULTIES.flat_map do |difficulty|
       difficulty_statistics = load_statistics.select { |statistic| difficulty == statistic['difficulty'] }
       difficulty_statistics.sort_by { |statistic| [statistic['attempts_used'], statistic['hints_used']] }
     end

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class BaseConsole
-  def initialize(*args); end
+  def initialize(*_args)
+    raise NotImplementedError if instance_of? BaseConsole
+  end
 
   def self.call(*args)
     new(*args).call
